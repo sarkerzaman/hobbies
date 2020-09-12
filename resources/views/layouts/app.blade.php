@@ -6,8 +6,9 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="description" content="@yield('page_description','A cool social network to share your hobbies')">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('page_title', 'My Hobbies')</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -33,7 +34,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li><a href="/" class="nav-link {{ Request::is('/') ? ' active':'' }}">Home</a></li>
+                        <li><a href="/contact" class="nav-link {{ Request::is('/contact') ? ' active':'' }}">Contact</a></li>
+                        <li><a href="/hobby" class="nav-link {{ Request::is('/hobby*') ? ' active':'' }}">Hobbies</a></li>
+                        <li><a href="{{ route('tag.index') }}" class="nav-link {{ Request::is('/tag*') ? ' active':'' }}">Tags</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -73,6 +77,7 @@
         </nav>
 
         <main class="py-4">
+            @include('inc.message')
             @yield('content')
         </main>
     </div>

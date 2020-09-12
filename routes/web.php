@@ -17,6 +17,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Route::get('/contact', function () {
+    return view('contact');
+});
 
+Route::resource('/hobby', 'HobbyController');
+Route::resource('/tag', 'TagController');
+
+Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');

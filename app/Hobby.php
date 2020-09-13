@@ -19,5 +19,5 @@ class Hobby extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'description', 'user_id'];
 }

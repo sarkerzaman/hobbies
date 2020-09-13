@@ -15,20 +15,24 @@
                         @foreach ($tags as $tag)
                             <li class="list-group-item">
                                 <span style="font-size: 130%;" class="mr-2 badge badge-{{ $tag->style }}">{{ $tag->name }}</span>
-                                <a class="btn btn-sm btn-light ml-4" href="{{ route('tag.edit', $tag->id) }}"><i class="fas fa-edit"></i> Edit</a>
-                                <form class="float-right" style="display:inline" action="{{ route('tag.destroy', $tag->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <input type="submit" class="btn btn-outline-danger" value="Delete">
-                                </form>
+                                @auth
+                                    <a class="btn btn-sm btn-light ml-4" href="{{ route('tag.edit', $tag->id) }}"><i class="fas fa-edit"></i> Edit</a>
+                                    <form class="float-right" style="display:inline" action="{{ route('tag.destroy', $tag->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="submit" class="btn btn-outline-danger" value="Delete">
+                                    </form>
+                                @endauth
                             </li>
                         @endforeach
                     </ul>
                 </div>
             </div>
-            <div class="mt-2">
-                <a class="btn btn-success" href="{{ route('tag.create') }}"><i class="fas fa-plus-circle"></i>  New Tag</a>
-            </div>
+            @auth
+                <div class="mt-2">
+                    <a class="btn btn-success" href="{{ route('tag.create') }}"><i class="fas fa-plus-circle"></i>  New Tag</a>
+                </div>
+            @endauth
         </div>
     </div>
 </div>

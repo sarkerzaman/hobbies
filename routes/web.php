@@ -23,6 +23,8 @@ Route::get('/contact', function () {
 
 Route::resource('/hobby', 'HobbyController');
 Route::resource('/tag', 'TagController');
+Route::resource('/user', 'UserController');
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/hobby/tag/{tag_id}', 'HobbyTagController@getFilteredHobies');

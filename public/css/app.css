@@ -4575,6 +4575,13 @@ readers do not read off random characters that represent icons */
   font-weight: 900; }
 @charset "UTF-8";
 
+.page-title h4 {
+  padding: 10px 5px;
+  margin-bottom: 20px;
+  color: #0978d2;
+  font-weight: 600;
+}
+
 /*!
  * Bootstrap v4.5.2 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors

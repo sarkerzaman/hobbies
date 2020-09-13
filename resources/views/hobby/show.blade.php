@@ -13,6 +13,13 @@
                 <div class="card-body">
                     <h5>{{ $hobby->name }}</h5>
                     <p>{{ $hobby->description }}</p>
+                    <p>
+                        @foreach ($hobby->tags as $tag)
+                            <a href="{{ route('tag.index')}}">
+                                <span class="badge badge-{{ $tag->style }}">{{ $tag->name }}</span>
+                            </a>
+                        @endforeach
+                    </p>
                 </div>
             </div>
             <div class="mt-2">

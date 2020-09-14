@@ -21,7 +21,9 @@
                     <ul class="list-group">
                         @foreach ($hobbies as $hobby)
                             <li class="list-group-item">
-                                <a title="Hobby Detail" href="{{ route('hobby.show', $hobby->id) }}">{{ $hobby->name }}</a>
+                                <a title="Hobby Detail" href="{{ route('hobby.show', $hobby->id) }}">
+                                    <img src="/img/thumb_landscape.jpg" alt="thumb"> {{ $hobby->name }}
+                                </a>
                                 <span class="mx-2">Posted by: <a title="User Detail" href="{{ route('user.show', $hobby->user->id) }}">{{ $hobby->user->name }}</a> ({{ $hobby->user->hobbies->count() }} hobbies)</span>
                                 @auth
                                     <a class="btn btn-sm btn-light ml-4" href="{{ route('hobby.edit', $hobby->id) }}"><i class="fas fa-edit"></i> Edit</a>

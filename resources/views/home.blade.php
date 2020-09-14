@@ -11,23 +11,32 @@
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                    <div class="row">
+                        <div class="col-md-9">
+                            <h2>I'm {{ auth()->user()->name }}</h2>
+                            <h5>Motto</h5>
+                            <p>{{ auth()->user()->motto ?? '' }}</p>
+                            <h5>About Me </h5>
+                            <p>{{ auth()->user()->about_me ?? '' }}</p>
                         </div>
-                    @endif
+                        <div class="col-md-3">
+                            <img class="img-thumbnail" src="/img/300x400.jpg" alt="{{ auth()->user()->name }}">
+                        </div>
+                    </div>
 
                     @if($hobbies)
                         @if ($hobbies->count() > 0)
-                            <h5 class="mb-3">Your hobbies: </h5>
+                            <h5 class="mb-3">Hobbies: </h5>
                         @else
-                            <h5 class="mb-3">Hello {{ auth()->user()->name }}! These are your hobbies.</h5>
+                            <h5 class="mb-3">You have not created any hobby yet.</h5>
                         @endif
 
                         <ul class="list-group">
                             @foreach ($hobbies as $hobby)
                                 <li class="list-group-item">
-                                    <a title="Hobby Detail" href="{{ route('hobby.show', $hobby->id) }}">{{ $hobby->name }}</a>
+                                    <a title="Hobby Detail" href="{{ route('hobby.show', $hobby->id) }}">{{ $hobby->name }}
+                                        <img src="/img/thumb_landscape.jpg" alt="thumb">
+                                    </a>
                                     @auth
                                         <a class="btn btn-sm btn-light ml-4" href="{{ route('hobby.edit', $hobby->id) }}"><i class="fas fa-edit"></i> Edit</a>
                                         <form style="display:inline" action="{{ route('hobby.destroy', $hobby->id) }}" method="POST">

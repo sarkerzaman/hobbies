@@ -24,8 +24,15 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                <a class="navbar-brand"
+                    @auth
+                        href="{{ url('/home') }}"
+                    @endauth
+                    @guest
+                        href="{{ url('/') }}"
+                    @endguest
+                    >
+                    {{ config('app.name') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -34,7 +41,12 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li><a href="/" class="nav-link {{ Request::is('/') ? ' active':'' }}">Home</a></li>
+                        @guest
+                            <li><a href="/" class="nav-link {{ Request::is('/') ? ' active':'' }}">Welcome</a></li>
+                        @endguest
+                        @auth
+                            <li><a href="/home" class="nav-link {{ Request::is('home') ? ' active':'' }}">Home</a></li>
+                        @endauth
                         <li><a href="/contact" class="nav-link {{ Request::is('/contact') ? ' active':'' }}">Contact</a></li>
                         <li><a href="/hobby" class="nav-link {{ Request::is('/hobby*') ? ' active':'' }}">Hobbies</a></li>
                         <li><a href="{{ route('tag.index') }}" class="nav-link {{ Request::is('/tag*') ? ' active':'' }}">Tags</a></li>

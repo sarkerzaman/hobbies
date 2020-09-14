@@ -13,18 +13,34 @@
                 <div class="card-body">
                     <h5>{{ $hobby->name }}</h5>
                     <p>{{ $hobby->description }}</p>
-                    <p>
-                        @foreach ($hobby->tags as $tag)
-                            <a href="{{ route('tag.index')}}">
-                                <span class="badge badge-{{ $tag->style }}">{{ $tag->name }}</span>
-                            </a>
-                        @endforeach
-                    </p>
+
+                    @if ($hobby->tags->count() > 0)
+                        <b>Used Tags:</b> (Click to remove)
+                        <p>
+                            @foreach ($hobby->tags as $tag)
+                                <a href="/hobby/{{ $hobby->id }}/tag/{{ $tag->id }}/detach">
+                                    <span class="badge badge-{{ $tag->style }}">{{ $tag->name }}</span>
+                                </a>
+                            @endforeach
+                        </p>
+                    @endif
+
+                    @if ($availableTags->count() > 0)
+                        <b>Available Tags:</b> (Click to assign)
+                        <p>
+                            @foreach ($availableTags as $tag)
+                                <a href="/hobby/{{ $hobby->id }}/tag/{{ $tag->id }}/attach">
+                                    <span class="badge badge-{{ $tag->style }}">{{ $tag->name }}</span>
+                                </a>
+                            @endforeach
+                        </p>
+                    @endif
+
                 </div>
             </div>
-            <div class="mt-2">
+            {{-- <div class="mt-2">
                 <a class="btn btn-primary btn-sm" href="{{ URL::previous() }}"><i class="fas fa-arrow-circle-up"></i> Go Back</a>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

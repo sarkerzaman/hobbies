@@ -6,6 +6,14 @@
     </div>
 @endisset
 
+@isset($message_info)
+    <div class="container">
+        <div class="alert alert-warning" role="alert">
+            {{ $message_info }}
+        </div>
+    </div>
+@endisset
+
 @isset($warning_message)
     <div class="container">
         <div class="alert alert-warning" role="alert">

@@ -25,18 +25,31 @@
                         <td>{{ $user->motto }}</td>
                     </tr>
                     <tr>
-                        <th scope="col">Hobbies</th>
-                        <td>
-                            @foreach ($user->hobbies as $hobby)
-                            <a href="{{ route('hobby.show', $hobby->id) }}">
-                                <span>{{ $hobby->name }}</span>
-                            </a>
-                             @endforeach
-                        </td>
-                    </tr>
-                    <tr>
                         <th scope="col">About Me</th>
                         <td>{{ $user->about_me }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Hobbies</th>
+                        <td>
+                            @if ($user->hobbies->count()>0)
+                                <ul class="list-group">
+                                    @foreach ($user->hobbies as $hobby)
+                                        <li class="list-group-item">
+                                            <a title="Hobby Detail" href="{{ route('hobby.show', $hobby->id) }}">{{ $hobby->name }}</a>
+                                            <span class="float-right">{{ $hobby->created_at->diffForHumans() }}</span>
+                                            <br/>
+                                            @foreach ($hobby->tags as $tag)
+                                                <a href="/hobby/tag/{{$tag->id}}">
+                                                    <span class="badge badge-{{ $tag->style }}">{{ $tag->name }}</span>
+                                                </a>
+                                            @endforeach
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <p>You have not created any hobby yet</p>
+                            @endif
+                        </td>
                     </tr>
                 </tbody>
             </table>

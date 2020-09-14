@@ -17,11 +17,12 @@
                                 <span style="font-size: 130%;" class="mr-2 badge badge-{{ $tag->style }}">{{ $tag->name }}</span>
                                 @auth
                                     <a class="btn btn-sm btn-light ml-4" href="{{ route('tag.edit', $tag->id) }}"><i class="fas fa-edit"></i> Edit</a>
-                                    <form class="float-right" style="display:inline" action="{{ route('tag.destroy', $tag->id) }}" method="POST">
+                                    <form class="ml-2" style="display:inline" action="{{ route('tag.destroy', $tag->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <input type="submit" class="btn btn-outline-danger" value="Delete">
+                                        <input type="submit" class="btn btn-sm btn-outline-danger" value="Delete">
                                     </form>
+                                    <a class="float-right" href="/hobby/tag/{{ $tag->id }}">Used {{ $tag->hobbies->count() }} times</a>
                                 @endauth
                             </li>
                         @endforeach

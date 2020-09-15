@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -48,7 +50,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('user.show', compact('user'));
+        $success_message = Session::get('success_message');
+
+        return view('user.show', compact(['user', 'success_message']));
     }
 
     /**
@@ -59,7 +63,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('user.edit', compact('user'));
     }
 
     /**
@@ -71,7 +75,24 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'name' => 'required | min:3',
+            'motto' => 'required | min:20',
+            'image' => 'mimes:jpeg,jpg,bmp,png,gif'
+        ]);
+
+        if($request->image){
+            $image = Image::make($request->image);
+            $this->uploadImages($image, $user->id);
+        }
+
+        $user->update([
+            'name' => $request->name,
+            'motto' => $request->motto,
+            'about_me' => $request->about_me
+        ]);
+
+        return redirect()->route('user.show', $user->id)->with(['success_message' => 'Your profile has been updated']);
     }
 
     /**
@@ -82,6 +103,25 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        return $this->index()->with(['success_message' => 'User '.$user->name.' has been deleted']);
+    }
+
+    public function uploadImages($image, $userId){
+        if($image->width() > $image->height()){     //landscape
+            $image->resize(500, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->save(public_path() . "/img/users/" .$userId. "_large.jpg")
+                  ->resize(400, 500)->pixelate(12)->save(public_path() . "/img/users/" . $userId . "_pixelated.jpg");
+
+            $image->widen(60)->save(public_path() . "/img/users/" . $userId . "_thumb.jpg");
+
+        }else{  //portrait
+            $image->heighten(500)->save(public_path() . "/img/users/" .$userId. "_large.jpg")
+                  ->heighten(300)->pixelate(12)->save(public_path() . "/img/users/" . $userId . "_pixelated.jpg");
+
+            $image->heighten(60)->save(public_path() . "/img/users/" . $userId . "_thumb.jpg");
+        }
     }
 }

@@ -18,9 +18,18 @@
                             <p>{{ auth()->user()->motto ?? '' }}</p>
                             <h5>About Me </h5>
                             <p>{{ auth()->user()->about_me ?? '' }}</p>
+                            <a href="{{ route('user.edit', auth()->user()->id) }}" class="btn btn-sm btn-primary float-right">Update Profile</a>
                         </div>
                         <div class="col-md-3">
-                            <img class="img-thumbnail" src="/img/300x400.jpg" alt="{{ auth()->user()->name }}">
+                            @if (Auth::user() && file_exists('img/users/'.auth()->user()->id.'_large.jpg'))
+                                <a href="/img/users/{{ auth()->user()->id }}_large.jpg" data-lightbox="img/users/{{ auth()->user()->id }}_large.jpg" data-title="{{ auth()->user()->name }}">
+                                    <img class="img-fluid" src="/img/users/{{ auth()->user()->id }}_large.jpg" alt="{{ auth()->user()->name }}">
+                                </a>
+                            @else
+                                <a href="/img/users/{{ auth()->user()->id }}_pixelated.jpg" data-lightbox="img/users/{{ auth()->user()->id }}_pixelated.jpg" data-title="{{ auth()->user()->name }}">
+                                    <img class="img-fluid" src="/img/users/{{ auth()->user()->id }}_pixelated.jpg" alt="{{ auth()->user()->name }}">
+                                </a>
+                            @endif
                         </div>
                     </div>
 

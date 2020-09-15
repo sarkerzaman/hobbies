@@ -16,7 +16,10 @@
                         <tbody>
                             <tr>
                                 <th scope="col">Name</th>
-                                <td>{{ $user->name }}</td>
+                                <td>
+                                    {{ $user->name }}
+                                    <a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-primary float-right">Update Profile</a>
+                                </td>
                             </tr>
                             <tr>
                                 <th scope="col">Email</th>
@@ -62,7 +65,15 @@
                     </table>
                 </div>
                 <div class="col-md-3">
-                    <img class="img-thumbnail" src="/img/300x400.jpg" alt="{{ $user->name }}">
+                    @if (Auth::user() && file_exists('img/users/'.$user->id.'_large.jpg'))
+                        <a href="/img/users/{{ $user->id }}_large.jpg" data-lightbox="img/users/{{ $user->id }}_large.jpg" data-title="{{ $user->name }}">
+                            <img class="img-fluid" src="/img/users/{{ $user->id }}_large.jpg" alt="{{ $user->name }}">
+                        </a>
+                    @else
+                        <a href="/img/users/{{ $user->id }}_pixelated.jpg" data-lightbox="img/users/{{ $user->id }}_pixelated.jpg" data-title="{{ $user->name }}">
+                            <img class="img-fluid" src="/img/users/{{ $user->id }}_pixelated.jpg" alt="{{ $user->name }}">
+                        </a>
+                    @endif
                 </div>
             </div>
 

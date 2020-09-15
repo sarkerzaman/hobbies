@@ -14,7 +14,7 @@
                     <table class="table table-striped table-responsive">
                         <thead class="thead-light">
                           <tr>
-                            <th scope="col">SL</th>
+                            <th scope="col">ID</th>
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
                             <th scope="col">Moto</th>

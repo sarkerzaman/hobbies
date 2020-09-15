@@ -1,4 +1,8 @@
 /node_modules
+<<<<<<< HEAD
+=======
+/public/hot
+>>>>>>> image-upload
 /public/img
 /public/storage
 /storage/*.key

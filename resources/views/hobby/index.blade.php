@@ -21,7 +21,12 @@
                     <ul class="list-group">
                         @foreach ($hobbies as $hobby)
                             <li class="list-group-item">
-                                <a title="Hobby Detail" href="{{ route('hobby.show', $hobby->id) }}">{{ $hobby->name }}</a>
+                                @if (file_exists('img/hobbies/'. $hobby->id. '_thumb.jpg'))
+                                    <a title="Hobby Detail" href="{{ route('hobby.show', $hobby->id) }}">
+                                        <img src="/img/hobbies/{{ $hobby->id }}_thumb.jpg" alt="Hobby Thumb">
+                                    </a>
+                                @endif
+                                <a class="ml-2" title="Hobby Detail" href="{{ route('hobby.show', $hobby->id) }}">{{ $hobby->name }}</a>
                                 <span class="mx-2">Posted by: <a title="User Detail" href="{{ route('user.show', $hobby->user->id) }}">{{ $hobby->user->name }}</a> ({{ $hobby->user->hobbies->count() }} hobbies)</span>
                                 @auth
                                     <a class="btn btn-sm btn-light ml-4" href="{{ route('hobby.edit', $hobby->id) }}"><i class="fas fa-edit"></i> Edit</a>
@@ -30,6 +35,9 @@
                                         @method('DELETE')
                                         <input type="submit" class="btn btn-sm btn-outline-danger" value="Delete">
                                     </form>
+                                    @if (file_exists('img/hobbies/'. $hobby->id. '_thumb.jpg'))
+                                        <a class="btn btn-sm btn-outline-danger ml-2" href="/hobby/delete-images/{{ $hobby->id }}"><i class="fas fa-delete"></i> Delete Image</a>
+                                    @endif
                                 @endauth
                                 <span class="float-right">{{ $hobby->created_at->diffForHumans() }}</span>
                                 <br/>

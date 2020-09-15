@@ -37,7 +37,12 @@
                                         <ul class="list-group">
                                             @foreach ($user->hobbies as $hobby)
                                                 <li class="list-group-item">
-                                                    <a title="Hobby Detail" href="{{ route('hobby.show', $hobby->id) }}">{{ $hobby->name }}</a>
+                                                    @if (file_exists('img/hobbies/'. $hobby->id. '_thumb.jpg'))
+                                                        <a title="Hobby Detail" href="{{ route('hobby.show', $hobby->id) }}">
+                                                            <img src="/img/hobbies/{{ $hobby->id }}_thumb.jpg" alt="thumb">
+                                                        </a>
+                                                    @endif
+                                                    <a class="ml-2" title="Hobby Detail" href="{{ route('hobby.show', $hobby->id) }}">{{ $hobby->name }}</a>
                                                     <span class="float-right">{{ $hobby->created_at->diffForHumans() }}</span>
                                                     <br/>
                                                     @foreach ($hobby->tags as $tag)

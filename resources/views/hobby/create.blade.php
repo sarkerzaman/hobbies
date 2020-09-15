@@ -7,12 +7,17 @@
                 <div class="card">
                     <div class="card-header">Create New Hobby</div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('hobby.store') }}">
+                        <form method="POST" action="{{ route('hobby.store') }}" enctype="multipart/form-data" autocomplete="off">
                             @csrf
                             <div class="form-group">
                                 <label for="name">Name</label>
                                 <input type="text" class="form-control{{ $errors->has('name')? ' border-danger' : '' }}" id="name" name="name" value="{{ old('name') }}">
                                 <small class="form-text text-danger"><strong>{!! $errors->first('name') !!}</strong></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="image">Image</label>
+                                <input type="file" class="form-control{{ $errors->has('image')? ' border-danger' : '' }}" id="image" name="image" value="">
+                                <small class="form-text text-danger"><strong>{!! $errors->first('image') !!}</strong></small>
                             </div>
                             <div class="form-group">
                                 <label for="description">Description</label>

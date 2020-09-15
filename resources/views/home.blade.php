@@ -34,9 +34,12 @@
                         <ul class="list-group">
                             @foreach ($hobbies as $hobby)
                                 <li class="list-group-item">
-                                    <a title="Hobby Detail" href="{{ route('hobby.show', $hobby->id) }}">{{ $hobby->name }}
-                                        <img src="/img/thumb_landscape.jpg" alt="thumb">
-                                    </a>
+                                    @if (file_exists('img/hobbies/'. $hobby->id. '_thumb.jpg'))
+                                        <a title="Hobby Detail" href="{{ route('hobby.show', $hobby->id) }}">
+                                            <img src="/img/hobbies/{{ $hobby->id }}_thumb.jpg" alt="Hobby Thumb">
+                                        </a>
+                                    @endif
+                                <a class="ml-2" title="Hobby Detail" href="{{ route('hobby.show', $hobby->id) }}">{{ $hobby->name }}</a>
                                     @auth
                                         <a class="btn btn-sm btn-light ml-4" href="{{ route('hobby.edit', $hobby->id) }}"><i class="fas fa-edit"></i> Edit</a>
                                         <form style="display:inline" action="{{ route('hobby.destroy', $hobby->id) }}" method="POST">

@@ -39,10 +39,15 @@
                             @endif
                         </div>
                         <div class="col-md-3">
-                            <a href="/img/400x300.jpg" data-lightbox="400x300.jpg" data-title="{{ $hobby->name }}">
-                                <img class="img-fluid" src="/img/400x300.jpg" alt="">
-                            </a>
-                            <i class="fa fa-search-plus"></i> Click image to enlarge
+                            @if (Auth::user() && file_exists('img/hobbies/'.$hobby->id.'_large.jpg'))
+                                <a href="/img/hobbies/{{ $hobby->id }}_large.jpg" data-lightbox="img/hobbies/{{ $hobby->id }}_large.jpg" data-title="{{ $hobby->name }}">
+                                    <img class="img-fluid" src="/img/hobbies/{{ $hobby->id }}_large.jpg" alt="Hobby Large Image">
+                                </a>
+                            @else
+                                <a href="/img/hobbies/{{ $hobby->id }}_pixelated.jpg" data-lightbox="img/hobbies/{{ $hobby->id }}_pixelated.jpg" data-title="{{ $hobby->name }}">
+                                    <img class="img-fluid" src="/img/hobbies/{{ $hobby->id }}_pixelated.jpg" alt="Hobby Large Image">
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>

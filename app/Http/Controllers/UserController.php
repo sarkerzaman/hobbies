@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -21,6 +22,8 @@ class UserController extends Controller
     public function index()
     {
         $users = User::orderBy('id', 'DESC')->paginate(10);
+
+        abort_unless(Gate::allows('viewAny', $users), 403);
 
         return view('user.index', compact('users'));
     }
@@ -67,6 +70,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        abort_unless(Gate::allows('update', $user), 403);
+
         return view('user.edit', compact('user'));
     }
 
@@ -79,6 +84,8 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        abort_unless(Gate::allows('update', $user), 403);
+
         $request->validate([
             'name' => 'required | min:3',
             'motto' => 'required | min:20',
@@ -107,6 +114,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        abort_unless(Gate::allows('delete', $user), 403);
+
         $user->delete();
 
         return $this->index()->with(['success_message' => 'User '.$user->name.' has been deleted']);

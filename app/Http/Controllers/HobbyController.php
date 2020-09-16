@@ -7,6 +7,7 @@ use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Gate;
 
 class HobbyController extends Controller
 {
@@ -48,7 +49,7 @@ class HobbyController extends Controller
         $request->validate([
             'name' => 'required | min:3',
             'description' => 'required | min:10',
-            'image' => 'mimes: jpeg, jpg, bmp, gif, png | dimensions:ratio=4/3'
+            'image' => 'mimes:jpeg,jpg,bmp,gif,png'  //dimensions:ratio=4/3
         ]);
 
         $hobby = new Hobby([
@@ -90,6 +91,8 @@ class HobbyController extends Controller
      */
     public function edit(Hobby $hobby)
     {
+        abort_unless(Gate::allows('update', $hobby), 403);
+
         return view('hobby.edit')->with(['hobby'=>$hobby]);
     }
 
@@ -102,6 +105,8 @@ class HobbyController extends Controller
      */
     public function update(Request $request, Hobby $hobby)
     {
+        abort_unless(Gate::allows('update', $hobby), 403);
+
         $request->validate([
             'name' => 'required | min:3',
             'description' => 'required | min:10',
@@ -130,8 +135,9 @@ class HobbyController extends Controller
      */
     public function destroy(Hobby $hobby)
     {
-        $hobby->delete();
+        abort_unless(Gate::allows('delete', $hobby), 403);
 
+        $hobby->delete();
         return $this->index()->with('danger_message', 'Your hobby '.$hobby->name.' has been deleted.');
     }
 
